@@ -102,7 +102,7 @@ class FileIconAdmin extends \Magento\Framework\Data\Form\Element\AbstractElement
                 $url = $this->dataHelper->getBaseUrl().'/'.$file;
                 $fileIcon = "<a href=".$url." target='_blank'>
                     <img src='".$iconImage."' style='float: left;' />
-                    <div>OPEN FILE</div></a>";
+                    <div>" . __('OPEN FILE') . "</div></a>";
             } else {
                  $iconImage = $this->assetRepo->getUrl('Prince_Productattach::images/unknown.png');
                  $fileIcon = "<img src='".$iconImage."' style='float: left;' />";
