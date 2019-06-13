@@ -170,7 +170,7 @@ class Main extends \Magento\Backend\Block\Widget\Form\Generic implements \Magent
                 'title' => __('URL'),
                 'required' => false,
                 'disabled' => $isElementDisabled,
-                'note' => 'Upload file or Enter url'
+                'note' => __('Upload file or Enter url')
             ]
         );
 
