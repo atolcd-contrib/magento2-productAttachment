@@ -138,7 +138,7 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
         $this->addColumn(
             'store',
             [
-                'header' => __('Store '),
+                'header' => __('Store'),
                 'index' => 'store',
                 'renderer' => 'Prince\Productattach\Block\Adminhtml\Productattach\Renderer\Store'
             ]

@@ -64,9 +64,9 @@ class Status extends Column
         if (isset($dataSource['data']['items'])) {
             foreach ($dataSource['data']['items'] as &$items) {
                 if ($items['active'] == 1) {
-                    $items['active'] = '<span class="grid-severity-notice"><span>Enabled</span></span>';
+                    $items['active'] = '<span class="grid-severity-notice"><span>' . __("Enabled") . '</span></span>';
                 } else {
-                    $items['active'] = '<span class="grid-severity-critical"><span>Disabled</span></span>';
+                    $items['active'] = '<span class="grid-severity-critical"><span>' . __("Disabled") . '</span></span>';
                 }
             }
         }

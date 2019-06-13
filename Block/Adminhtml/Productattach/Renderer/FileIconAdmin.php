@@ -91,7 +91,7 @@ class FileIconAdmin extends \Magento\Framework\Data\Form\Element\AbstractElement
      */
     public function getElementHtml()
     {
-        $fileIcon = '<h3>No File Uploaded</h3>';
+        $fileIcon = '<h3>' . __("No File Uploaded") . '</h3>';
         $file = $this->getValue();
         if ($file) {
             $fileExt = pathinfo($file, PATHINFO_EXTENSION);
@@ -102,15 +102,15 @@ class FileIconAdmin extends \Magento\Framework\Data\Form\Element\AbstractElement
                 $url = $this->dataHelper->getBaseUrl().'/'.$file;
                 $fileIcon = "<a href=".$url." target='_blank'>
                     <img src='".$iconImage."' style='float: left;' />
-                    <div>" . __('OPEN FILE') . "</div></a>";
+                    <div>" . __("OPEN FILE") . "</div></a>";
             } else {
-                 $iconImage = $this->assetRepo->getUrl('Prince_Productattach::images/unknown.png');
-                 $fileIcon = "<img src='".$iconImage."' style='float: left;' />";
+                $iconImage = $this->assetRepo->getUrl('Prince_Productattach::images/unknown.png');
+                $fileIcon = "<img src='".$iconImage."' style='float: left;' />";
             }
             $attachId = $this->coreRegistry->registry('productattach_id');
             $fileIcon .= "<a href='".$this->urlBuilder->getUrl(
-                'productattach/index/deletefile', $param = ['productattach_id' => $attachId])."'>
-                <div style='color:red;'>DELETE FILE</div></a>";
+                    'productattach/index/deletefile', $param = ['productattach_id' => $attachId])."'>
+                <div style='color:red;'>" . __("DELETE FILE") . "</div></a>";
         }
         return $fileIcon;
     }
