@@ -89,7 +89,7 @@ class DeleteFile extends \Magento\Backend\App\Action
                 $currentFile = $model->getFile();
                 $mediaDirectory = $this->fileSystem
                     ->getDirectoryRead(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA);
-                $fileRootDir = $mediaDirectory->getAbsolutePath().'productattach';
+                $fileRootDir = $mediaDirectory->getAbsolutePath();
                 if ($this->file->isExists($fileRootDir . $currentFile)) {
                     $this->file->deleteFile($fileRootDir . $currentFile);
                     $model->setFile('');

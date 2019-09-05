@@ -162,3 +162,22 @@ Note: Keep only field which you want to update except "filename" and "fileConten
           </all:princeProductattachV1DeleteAttachmentRequest>
        </soap:Body>
     </soap:Envelope>
+```
+
+# Atol CD Open Source contrib
+
+<h3>Breaking release 2.0.0</h3>
+
+This release is considered as breaking considering that data stored in column `file` in `prince_productattach` table are modified.
+
+<h3>Why on earth did we do such a thing</h3>
+
+For our own development, we need to have file path relative to media folder instead of productattach.
+
+<h3>What about you</h3>
+
+Considering original module is not open source anymore and users are now depending on this fork, we removed `productattach` from media_path and add it directly in `file` column.
+
+If you still want to update to this major release :
+```composer require atolcd-contrib/magento2-productAttachment "^2.0"```
+```php bin/magento setup:upgrade```

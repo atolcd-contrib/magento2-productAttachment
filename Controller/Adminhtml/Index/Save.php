@@ -99,15 +99,12 @@ class Save extends \Magento\Backend\App\Action
             $store = $this->helper->getStores($data['store']);
             $data['customer_group'] = $customerGroup;
             $data['store'] = $store;
-            $uploadedFile = '';
             $model = $this->attachModel;
             $id = $this->getRequest()->getParam('productattach_id');
-            
+
             if ($id) {
                 $model->load($id);
-                $uploadedFile = $model->getFile();
             }
-            
             $model->addData($data);
 
             if (!$this->dataProcessor->validate($data)) {
