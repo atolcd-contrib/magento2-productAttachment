@@ -270,8 +270,7 @@ class Attachment extends \Magento\Framework\View\Element\Template
      */
     public function getFileSize($attachment)
     {
-        $attachmentPath = \Prince\Productattach\Helper\Data::MEDIA_PATH.$attachment;
-        $fileSize = $this->dataHelper->getFileSize($attachmentPath);
+        $fileSize = $this->dataHelper->getFileSize($attachment);
         return $fileSize;
     }
 

@@ -38,13 +38,13 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      * @var string
      */
     const XML_PATH_ITEMS_PER_PAGE     = 'productattach/view/items_per_page';
-    
+
     /**
      * Media path to extension images
      *
      * @var string
      */
-    const MEDIA_PATH    = 'productattach';
+    const MEDIA_PATH    = '/productattach';
 
     /**
      * @var \Magento\Framework\Filesystem\Directory\WriteInterface
@@ -62,7 +62,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      * @var \Magento\MediaStorage\Model\File\UploaderFactory
      */
     private $fileUploaderFactory;
-    
+
     /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
@@ -82,11 +82,11 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      * @throws \Magento\Framework\Exception\FileSystemException
      */
     public function __construct(
-        \Magento\Framework\App\Helper\Context $context,
-        \Magento\Backend\Model\UrlInterface $backendUrl,
-        \Magento\Framework\Filesystem $filesystem,
-        \Magento\MediaStorage\Model\File\UploaderFactory $fileUploaderFactory,
-        \Magento\Store\Model\StoreManagerInterface $storeManager
+      \Magento\Framework\App\Helper\Context $context,
+      \Magento\Backend\Model\UrlInterface $backendUrl,
+      \Magento\Framework\Filesystem $filesystem,
+      \Magento\MediaStorage\Model\File\UploaderFactory $fileUploaderFactory,
+      \Magento\Store\Model\StoreManagerInterface $storeManager
     ) {
         $this->backendUrl = $backendUrl;
         $this->filesystem = $filesystem;
@@ -95,7 +95,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         $this->storeManager = $storeManager;
         parent::__construct($context);
     }
-    
+
     /**
      * Upload image and return uploaded image file name or false
      *
@@ -110,9 +110,10 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             $uploader->setAllowRenameFiles(true);
             $uploader->setFilesDispersion(true);
             $uploader->setAllowCreateFolders(true);
-            
+
             if ($uploader->save($this->getBaseDir())) {
-                $model->setFile($uploader->getUploadedFileName());
+                $filePath = self::MEDIA_PATH . $uploader->getUploadedFileName();
+                $model->setFile($filePath);
                 $model->setFileExt($uploader->getFileExtension());
             }
         } catch (\Exception $e) {
@@ -164,11 +165,11 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     public function getBaseDir()
     {
         $path = $this->filesystem->getDirectoryRead(
-            DirectoryList::MEDIA
+          DirectoryList::MEDIA
         )->getAbsolutePath(self::MEDIA_PATH);
         return $path;
     }
-    
+
     /**
      * Return the Base URL for Productattach Item images
      *
@@ -177,10 +178,10 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     public function getBaseUrl()
     {
         return $this->storeManager->getStore()->getBaseUrl(
-            \Magento\Framework\UrlInterface::URL_TYPE_MEDIA
-        ) . self::MEDIA_PATH;
+          \Magento\Framework\UrlInterface::URL_TYPE_MEDIA
+        );
     }
-    
+
     /**
      * Return the number of items per page
      *
@@ -189,7 +190,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     public function getProductattachPerPage()
     {
         return abs((int)$this->getScopeConfig()
-            ->getValue(self::XML_PATH_ITEMS_PER_PAGE, \Magento\Store\Model\ScopeInterface::SCOPE_STORE)
+                             ->getValue(self::XML_PATH_ITEMS_PER_PAGE, \Magento\Store\Model\ScopeInterface::SCOPE_STORE)
         );
     }
 
@@ -259,7 +260,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             $ext = $exts[count($exts)-1];
         }
         if( in_array($ext, $this->getAllowedExt()) &&
-            strpos($filepathInMediaFolder,"..") === false ) {
+          strpos($filepathInMediaFolder,"..") === false ) {
             $finalPath = $this->getProductAttachMediaFolderAbsolutePath()."/".$filepathInMediaFolder;
             if(file_exists($finalPath)){
                 unlink($finalPath);
@@ -273,8 +274,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     private function getProductAttachMediaFolderAbsolutePath()
     {
-        $mediaPath = $this->filesystem->getDirectoryRead(DirectoryList::MEDIA)->getAbsolutePath();
-        return $mediaPath . self::MEDIA_PATH;
+        return $this->filesystem->getDirectoryRead(DirectoryList::MEDIA)->getAbsolutePath();
     }
 
     /**
@@ -286,7 +286,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     {
         return $this->getProductAttachMediaFolderAbsolutePath()."/".$this->getFileDispersionPath($filename);
     }
-    
+
     /**
      * Return the allowed file extensions
      * @return array
